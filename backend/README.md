@@ -1,4 +1,4 @@
-# Procedimento de Instalação
+# Procedimento de Instalação - Ambiente Local
 
 ## Pré requisitos: Node 18 ou superior
 
@@ -85,5 +85,63 @@
     Acesse no seu navegador o endereço do Swagger que foi configurado no arquivo `.env`, por exemplo:
 
     ```
-    http://localhost:3001
+    http://localhost:3001/swagger
     ```
+
+**Obs: Utilize o usuario: indt@email.com e senha: Indt@2024 gerados através das seeders**
+
+# Procedimento de Instalação - Usando o Docker
+
+## Pré requisitos: Docker
+
+1. **Inicializar serviços do projeto database:**
+
+    **Na raiz do repositório existem pastas: backend, database e frontend**
+
+    Antes de inicializar os serviços do docker no projeto backend, é necessário inicializar o banco postgres que está na pasta database. Vá até a raiz do projeto database e execute o seguinte comando:
+
+    Comando:
+
+    ```
+    docker-compose up --build
+    ```
+
+2. **Configurando .env DB_HOSTNAME com o IP da sua máquina local:**
+
+    ### 2.1 Certifique-se de que seu arquivo .env esteja configurado com o IP da sua máquina.
+
+    Em sistema operacional windows use o comando:
+
+    ```
+    ipconfig /all
+    ```
+
+    Em sistemas operacionais linux use o comando:
+
+    ```
+    ip a
+    ```
+
+    Após obter seu endereço IP subsitua o seguinte parametro no arquivo .env ex:
+
+    ```
+    DB_HOSTNAME="192.168.1.1"
+    ```
+
+3. **Inicializando projeto backend com docker-compose:**
+
+    ### 3.1 Com o seu aquivo .env configurado execute o seguinte comando na raiz do projeto:
+
+    Comando:
+
+    ```
+    docker-compose up --build
+    ```
+
+    ### 3.2 Após inicializar o serviço com o docker compose, realize o teste em seu navegaor através da url que você configurou no parametro da .env SWAGGER_API_URL=http://localhost:3001
+
+    ```
+    http://localhost:3001/swagger
+    ```
+
+**Obs: Utilize o usuario: indt@email.com e senha: Indt@2024 gerados através das seeders**
