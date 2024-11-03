@@ -6,14 +6,18 @@ import { APP_ROUTES } from "../../routes/constants";
 import UserTable from "../../components/Datatable";
 import { api } from "../../services/apiClient";
 import { useQuery } from "react-query";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export function Users() {
 	const navigate = useNavigate();
+	const { user } = useContext(AuthContext);
 
 	const [page, setPage] = useState(1);
 	const offset = 4;
+
+	const canActivateActions = user?.profiles?.slug == "admin";
 
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["userData", page],
@@ -55,25 +59,27 @@ export function Users() {
 						Gerenciamento de usuários
 					</Label>
 				</Row>
-				<Row
-					style={{
-						alignItems: "flex-end",
-						paddingLeft: 0,
-						paddingRight: 0,
-					}}
-				>
-					<Button
-						style={{ width: "auto" }}
-						onClick={() =>
-							navigate(
-								`/${APP_ROUTES.USERS.path}/${APP_ROUTES.USERS.REGISTER.path}`
-							)
-						}
+				{canActivateActions && (
+					<Row
+						style={{
+							alignItems: "flex-end",
+							paddingLeft: 0,
+							paddingRight: 0,
+						}}
 					>
-						<Add />
-						Cadastrar Usuário
-					</Button>
-				</Row>
+						<Button
+							style={{ width: "auto" }}
+							onClick={() =>
+								navigate(
+									`/${APP_ROUTES.USERS.path}/${APP_ROUTES.USERS.REGISTER.path}`
+								)
+							}
+						>
+							<Add />
+							Cadastrar Usuário
+						</Button>
+					</Row>
+				)}
 
 				{data?.items.length && !isLoading ? (
 					<UserTable
@@ -84,6 +90,7 @@ export function Users() {
 						totalPages={data?.meta?.totalPages}
 						onPageChange={setPage}
 						offset={offset}
+						activateActions={canActivateActions}
 					/>
 				) : (
 					<Card style={{ padding: "1vw" }}>

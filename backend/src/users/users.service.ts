@@ -68,7 +68,7 @@ export class UsersService {
 	}
 
 	async update(id: number, updateUserDto: UpdateUserDto) {
-		const user = await this.userRepository.getUser(id);
+		const user = await this.userRepository.findOne({ where: { id } });
 
 		if (!user)
 			throw new BadRequestException({

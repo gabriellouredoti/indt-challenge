@@ -14,9 +14,16 @@ type AuthContextData = {
 };
 
 type UserProps = {
-	id: string;
+	id: number | string;
 	name: string;
+	surname: string;
+	status: string;
 	email: string;
+	profiles: {
+		id: number | string;
+		description: string;
+		slug: string;
+	};
 };
 
 type SignInProps = {
@@ -56,11 +63,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 			api.post("/auth/whoami")
 				.then((response) => {
-					const { id, name, email } = response.data;
+					const { id, name, surname, status, email, profiles } =
+						response.data;
 					setUser({
 						id,
 						name,
 						email,
+						surname,
+						status,
+						profiles: {
+							id: profiles.id,
+							description: profiles.description,
+							slug: profiles.slug,
+						},
 					});
 				})
 				.catch(() => {
@@ -79,7 +94,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 				password,
 			})
 			.then((response) => {
-				const { id, name, token } = response.data;
+				const { id, name, email, surname, status, profiles, token } =
+					response.data;
 
 				setCookie(undefined, "@indt.token", token, {
 					maxAge: 60 * 60 * 24 * 30,
@@ -90,6 +106,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 					id,
 					name,
 					email,
+					surname,
+					status,
+					profiles: {
+						id: profiles.id,
+						description: profiles.description,
+						slug: profiles.slug,
+					},
 				});
 
 				api.defaults.headers["authorization"] = `Bearer ${token}`;

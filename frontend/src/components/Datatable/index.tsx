@@ -32,6 +32,7 @@ const UserTable: React.FC<UserTableProps> = ({
 	onView,
 	onPageChange,
 	totalPages,
+	activateActions,
 }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 
@@ -64,42 +65,52 @@ const UserTable: React.FC<UserTableProps> = ({
 					row.getValue("status") === 1 ? "Ativo" : "Cancelado",
 			},
 			{
-				id: "actions",
-				header: "Ações",
-				cell: ({ row }) => (
-					<div>
-						<button
-							onClick={() => onToggleStatus(row.getValue("id"))}
-							style={{
-								padding: "0.3vw",
-								color: "#fff",
-								backgroundColor: "#0c1c34",
-								border: "none",
-								borderRadius: "0.2vw",
-								width: "10vh",
-							}}
-						>
-							{row.getValue("status") === 1
-								? "Cancelar"
-								: "Ativar"}
-						</button>
+				...(activateActions
+					? {
+							id: "actions",
+							header: "Ações",
+							cell: ({ row }) => (
+								<div>
+									<button
+										onClick={() =>
+											onToggleStatus(row.getValue("id"))
+										}
+										style={{
+											padding: "0.3vw",
+											color: "#fff",
+											backgroundColor: "#0c1c34",
+											border: "none",
+											borderRadius: "0.2vw",
+											width: "10vh",
+										}}
+									>
+										{row.getValue("status") === 1
+											? "Cancelar"
+											: "Ativar"}
+									</button>
 
-						<IconButton
-							onClick={() => onEdit(row.getValue("id"))}
-							style={{ marginLeft: "8px" }}
-						>
-							<Edit />
-						</IconButton>
-						{onView && (
-							<IconButton
-								onClick={() => onView(row.getValue("id"))}
-								style={{ marginLeft: "8px" }}
-							>
-								<Reorder />
-							</IconButton>
-						)}
-					</div>
-				),
+									<IconButton
+										onClick={() =>
+											onEdit(row.getValue("id"))
+										}
+										style={{ marginLeft: "8px" }}
+									>
+										<Edit />
+									</IconButton>
+									{onView && (
+										<IconButton
+											onClick={() =>
+												onView(row.getValue("id"))
+											}
+											style={{ marginLeft: "8px" }}
+										>
+											<Reorder />
+										</IconButton>
+									)}
+								</div>
+							),
+					  }
+					: { accessorFn: "", accessorKey: "-" }),
 			},
 		],
 		[]

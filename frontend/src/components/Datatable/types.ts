@@ -14,4 +14,5 @@ export interface UserTableProps {
 	onPageChange: (newPage: number) => void;
 	offset?: number;
 	totalPages: number;
+	activateActions?: boolean;
 }

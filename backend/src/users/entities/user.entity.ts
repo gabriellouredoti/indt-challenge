@@ -32,6 +32,7 @@ export class User {
 
 	@Column()
 	profile_id: number;
+
 	@ManyToOne(() => Profile, (profile) => profile.id)
 	@JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
 	profiles: Profile;

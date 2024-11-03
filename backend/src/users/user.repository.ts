@@ -20,6 +20,7 @@ export const customUserRepository: Pick<UserRepository, any> = {
 				surname: true,
 				email: true,
 				status: true,
+				profile_id: true,
 			},
 		});
 	},
@@ -34,6 +35,7 @@ export const customUserRepository: Pick<UserRepository, any> = {
 				surname: true,
 				email: true,
 				status: true,
+				profile_id: true,
 			},
 			order: {
 				name: 'asc',
