@@ -1,6 +1,5 @@
 import { useQuery } from "react-query";
-import { Content, Row, Label } from "../Login/styles";
-import { Card, Wrapper } from "../Users/styles";
+import { Content, Row, Label, Card, Wrapper } from "../../components/global";
 import { api } from "../../services/apiClient";
 import PieChart from "./components/Charts/PieChart";
 import BarChart from "./components/Charts/BarChart";

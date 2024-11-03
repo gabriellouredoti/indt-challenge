@@ -1,5 +1,12 @@
-import { Button, Content, Label, LoginBox, Row } from "../../Login/styles";
-import { Card, Wrapper } from "./../styles";
+import {
+	Button,
+	Content,
+	Label,
+	LoginBox,
+	Row,
+	Card,
+	Wrapper,
+} from "../../../components/global";
 
 import Grid from "@mui/material/Grid2";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,6 +20,7 @@ import { Divider } from "@mui/material";
 import CustomSelect from "../../../components/Select";
 import { useQuery } from "react-query";
 import toast from "react-hot-toast";
+import { userService } from "../../../services/users";
 
 export function CreateUser() {
 	const navigate = useNavigate();
@@ -35,7 +43,8 @@ export function CreateUser() {
 
 	useQuery({
 		queryKey: ["user", id],
-		queryFn: () => (id ? api.get(`users/${id}`) : Promise.resolve(null)),
+		queryFn: () =>
+			id ? userService.getUserById(+id) : Promise.resolve(null),
 		select: (data) => data?.data,
 		enabled: !!id,
 		onSuccess: (data) => {
@@ -43,7 +52,7 @@ export function CreateUser() {
 				setValue("name", data.name);
 				setValue("surname", data.surname);
 				setValue("email", data.email);
-				setValue("profile_id", data.profiles.id);
+				setValue("profile_id", data?.profiles.id);
 			}
 		},
 		onError: () => {
@@ -54,8 +63,8 @@ export function CreateUser() {
 
 	const onSubmit = (data: formRegisterUserType) => {
 		const request = id
-			? api.patch(`users/${id}`, data)
-			: api.post("users", data);
+			? userService.updateUser(+id, data)
+			: userService.createUser(data);
 
 		request
 			.then((response) => {

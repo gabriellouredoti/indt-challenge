@@ -1,4 +1,11 @@
-import { Button, Content, Label, LoginBox, Row, Subtitle } from "./styles";
+import {
+	Button,
+	Content,
+	Label,
+	LoginBox,
+	Row,
+	Subtitle,
+} from "../../components/global";
 import { useForm } from "react-hook-form";
 import { formRecoveryPasswordType, schemaLogin } from "./utils/zod";
 import { zodResolver } from "@hookform/resolvers/zod";

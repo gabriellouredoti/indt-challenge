@@ -1,5 +1,4 @@
-import { Content, Row, Label } from "../Login/styles";
-import { Wrapper } from "../Users/styles";
+import { Content, Row, Label, Wrapper } from "../../components/global";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 

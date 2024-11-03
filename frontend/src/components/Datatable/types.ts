@@ -1,8 +1,13 @@
+import { Profile } from "../../services/users/types";
+
 export interface User {
-	id: number;
+	id?: number;
 	name: string;
+	surname: string;
 	email: string;
-	status: number;
+	status?: number | string;
+	profile_id?: number | string;
+	profiles?: Profile | any;
 }
 
 export interface UserTableProps {

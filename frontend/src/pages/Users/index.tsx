@@ -1,14 +1,22 @@
-import { Button, Content, Label, Row } from "../Login/styles";
-import { Card, Wrapper } from "./styles";
+import {
+	Button,
+	Content,
+	Label,
+	Row,
+	Card,
+	Wrapper,
+} from "../../components/global";
+
 import { Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { APP_ROUTES } from "../../routes/constants";
 import UserTable from "../../components/Datatable";
-import { api } from "../../services/apiClient";
 import { useQuery } from "react-query";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../contexts/AuthContext";
+import { userService } from "../../services/users";
+import { IUser } from "../../services/users/types";
 
 export function Users() {
 	const navigate = useNavigate();
@@ -21,10 +29,10 @@ export function Users() {
 
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["userData", page],
-		queryFn: async () => api.get("users", { params: { page, offset } }),
+		queryFn: async () => userService.getAllUsers({ page, offset }),
 		select(data) {
 			return {
-				items: data.data.items.map((item: any) => ({
+				items: data.data.items.map((item: IUser) => ({
 					...item,
 					profile_name: item.profiles.description,
 				})),
@@ -34,7 +42,8 @@ export function Users() {
 	});
 
 	const handleToggleStatus = (userId: number) => {
-		api.patch(`users/${userId}/change-status`)
+		userService
+			.changeUserStatus(userId)
 			.then((response) => {
 				toast.success(response?.data?.message);
 				refetch();
@@ -83,7 +92,7 @@ export function Users() {
 
 				{data?.items.length && !isLoading ? (
 					<UserTable
-						users={data?.items}
+						users={data.items}
 						onToggleStatus={handleToggleStatus}
 						onEdit={handleEdit}
 						totalRecords={data?.meta?.totalItems}

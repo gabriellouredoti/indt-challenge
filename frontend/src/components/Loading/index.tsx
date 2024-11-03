@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { Content } from "../../pages/Login/styles";
+import { Content } from "../../components/global";
 
 export function Loading() {
 	return (
