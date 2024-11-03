@@ -24,8 +24,9 @@ export function Dashboard() {
 				<Card
 					style={{
 						width: "100%",
+						height: "auto",
 						flexDirection: "row",
-						alignItems: "center",
+						alignItems: "flex-end",
 						justifyContent: "center",
 					}}
 				>
@@ -33,9 +34,30 @@ export function Dashboard() {
 						<>
 							<Row>
 								<PieChart data={data} />
+								<Label
+									style={{
+										fontSize: "0.8vw",
+										color: "#000",
+										textAlign: "center",
+										paddingTop: "2vh",
+									}}
+								>
+									Percentual de usuários ativos e cancelados
+									por perfil
+								</Label>
 							</Row>
 							<Row>
 								<BarChart data={data} />
+								<Label
+									style={{
+										fontSize: "0.8vw",
+										color: "#000",
+										textAlign: "center",
+									}}
+								>
+									Ranking de usuários ativos e cancelados por
+									perfil
+								</Label>
 							</Row>
 						</>
 					)}
