@@ -1,15 +1,23 @@
-FROM node:18-slim
+FROM node:18
 
-RUN apt update -qy && apt upgrade -qy && apt install -qy openssl && apt autoremove -qy
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
 
-ADD . .
+RUN npm install
 
-RUN npm i
+COPY . .
 
+COPY .env ./
+
+# run migrations
 RUN npm run migrate
 
-CMD ["npm", "run", "start:dev"]
+# run seeders
+RUN npm run data:sync
 
-EXPOSE 3001 3001
+RUN npm run build
+
+EXPOSE 3001
+
+CMD ["npm", "run", "start:prod"]
