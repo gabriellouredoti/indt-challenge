@@ -13,7 +13,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PaginationOptionsDto } from './dto/list-user.dto';
-import { Public } from 'src/common/decorators';
 
 @ApiTags('Users')
 @ApiBearerAuth('JWT-auth')
@@ -22,7 +21,6 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Post()
-	@Public()
 	@ApiOperation({
 		summary: 'Create user',
 	})
